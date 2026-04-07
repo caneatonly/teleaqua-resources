@@ -10,3 +10,4 @@ pycache/
 *.d
 *.tmp
 *.swp
+.codex
