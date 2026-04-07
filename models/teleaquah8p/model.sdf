@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sdf version="1.9">
+  <model name="teleaquah8">
+    <!-- 虚拟世界链接：补充惯性（Gazebo必需） -->
+    <!-- 使用 ball 关节直接连接到 world -->
+    <!-- <joint name="world_base_joint" type="ball">
+      <parent>world</parent>
+      <child>base_link</child>
+    </joint> -->
+
+
+    <pose>0 0 0.5 0 0 0</pose>
+
+    <link name="base_link">
+      <gravity>1</gravity>
+      <velocity_decay>
+        <linear>0.1</linear>
+        <angular>0.1</angular>
+      </velocity_decay>
+
+      <inertial>
+        <mass>4.1</mass>
+        <inertia>
+          <ixx>0.07</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+
+          <iyy>0.07</iyy>
+          <iyz>0</iyz>
+
+          <izz>0.10</izz>
+        </inertia>
+        <pose>0 0 -0.05 0 0 0</pose>
+      </inertial>
+
+      <visual name="base_visual">
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://teleaquah8/meshes/model.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+
+      <collision name="base_collision">
+        <geometry>
+          <box><size>0.55 0.55 0.2</size></box>
+        </geometry>
+        <surface>
+          <contact>
+            <ode>
+              <min_depth>0.001</min_depth>
+              <max_vel>0.1</max_vel>
+              <kp>100000.0</kp>
+              <kd>100.0</kd>
+            </ode>
+          </contact>
+          <friction>
+            <ode>
+              <mu>0.4</mu>
+              <mu2>0.4</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+
+      <sensor name="imu_sensor" type="imu">
+        <always_on>1</always_on>
+        <update_rate>250</update_rate>
+        <visualize>true</visualize>
+        <imu>
+          <angular_velocity>
+            <x><noise type="gaussian"><mean>0</mean><stddev>2e-4</stddev></noise></x>
+            <y><noise type="gaussian"><mean>0</mean><stddev>2e-4</stddev></noise></y>
+            <z><noise type="gaussian"><mean>0</mean><stddev>2e-4</stddev></noise></z>
+          </angular_velocity>
+          <linear_acceleration>
+            <x><noise type="gaussian"><mean>0</mean><stddev>1.7e-2</stddev></noise></x>
+            <y><noise type="gaussian"><mean>0</mean><stddev>1.7e-2</stddev></noise></y>
+            <z><noise type="gaussian"><mean>0</mean><stddev>1.7e-2</stddev></noise></z>
+          </linear_acceleration>
+        </imu>
+      </sensor>
+      <sensor name="magnetometer_sensor" type="magnetometer">
+        <always_on>1</always_on>
+        <update_rate>100</update_rate>
+        <magnetometer>
+          <x><noise type="gaussian"><stddev>0.0001</stddev></noise></x>
+          <y><noise type="gaussian"><stddev>0.0001</stddev></noise></y>
+          <z><noise type="gaussian"><stddev>0.0001</stddev></noise></z>
+        </magnetometer>
+      </sensor>
+      <sensor name="air_pressure_sensor" type="air_pressure">
+        <always_on>1</always_on>
+        <update_rate>50</update_rate>
+        <air_pressure>
+          <pressure>
+            <noise type="gaussian"><mean>0</mean><stddev>0.01</stddev></noise>
+          </pressure>
+        </air_pressure>
+      </sensor>
+      <sensor name="navsat_sensor" type="navsat">
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+      </sensor>
+    </link>
+
+    <joint name="rotor_0_joint" type="revolute">
+      <parent>base_link</parent>
+      <child>rotor_0</child>
+      <pose relative_to="base_link">0.163 -0.187 0.061 0 0 0</pose>
+      <axis><xyz>0 0 1</xyz></axis>
+    </joint>
+    <link name="rotor_0">
+      <pose relative_to="rotor_0_joint">0 0 0 0 0 0</pose>
+      <inertial><mass>0.113</mass><inertia><ixx>0.0001</ixx><iyy>0.0001</iyy><izz>0.0002</izz></inertia></inertial>
+      <visual name="rotor_0_visual"><geometry><mesh><scale>1 1 1</scale><uri>model://teleaquah8/meshes/ccw_prop.stl</uri></mesh></geometry><material><diffuse>0 0 1 1</diffuse></material></visual>
+    </link>
+    <plugin filename="gz-sim-multicopter-motor-model-system" name="gz::sim::systems::MulticopterMotorModel">
+      <jointName>rotor_0_joint</jointName>
+      <linkName>rotor_0</linkName>
+      <turningDirection>ccw</turningDirection>
+      <timeConstantUp>0.015</timeConstantUp><timeConstantDown>0.03</timeConstantDown>
+      <maxRotVelocity>1585</maxRotVelocity>
+      <motorConstant>1.64e-05</motorConstant>
+      <momentConstant>0.018</momentConstant>
+      <commandSubTopic>command/motor_speed</commandSubTopic>
+      <motorNumber>0</motorNumber>
+      <rotorDragCoefficient>0.0001</rotorDragCoefficient><rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+      <motorType>velocity</motorType>
+    </plugin>
+
+    <joint name="rotor_1_joint" type="revolute">
+      <parent>base_link</parent>
+      <child>rotor_1</child>
+      <pose relative_to="base_link">0.163 0.187 0.061 0 0 0</pose>
+      <axis><xyz>0 0 1</xyz></axis>
+    </joint>
+    <link name="rotor_1">
+      <pose relative_to="rotor_1_joint">0 0 0 0 0 0</pose>
+      <inertial><mass>0.113</mass><inertia><ixx>0.0001</ixx><iyy>0.0001</iyy><izz>0.0002</izz></inertia></inertial>
+      <visual name="rotor_1_visual"><geometry><mesh><scale>1 1 1</scale><uri>model://teleaquah8/meshes/cw_prop.stl</uri></mesh></geometry><material><diffuse>1 0 0 1</diffuse></material></visual>
+    </link>
+    <plugin filename="gz-sim-multicopter-motor-model-system" name="gz::sim::systems::MulticopterMotorModel">
+      <jointName>rotor_1_joint</jointName>
+      <linkName>rotor_1</linkName>
+      <turningDirection>cw</turningDirection>
+      <timeConstantUp>0.015</timeConstantUp><timeConstantDown>0.03</timeConstantDown>
+      <maxRotVelocity>1585</maxRotVelocity>
+      <motorConstant>1.64e-05</motorConstant>
+      <momentConstant>0.018</momentConstant>
+      <commandSubTopic>command/motor_speed</commandSubTopic>
+      <motorNumber>1</motorNumber>
+      <rotorDragCoefficient>0.0001</rotorDragCoefficient><rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+      <motorType>velocity</motorType>
+    </plugin>
+
+    <joint name="rotor_2_joint" type="revolute">
+      <parent>base_link</parent>
+      <child>rotor_2</child>
+      <pose relative_to="base_link">-0.166 0.187 0.061 0 0 0</pose>
+      <axis><xyz>0 0 1</xyz></axis>
+    </joint>
+    <link name="rotor_2">
+      <pose relative_to="rotor_2_joint">0 0 0 0 0 0</pose>
+      <inertial><mass>0.113</mass><inertia><ixx>0.0001</ixx><iyy>0.0001</iyy><izz>0.0002</izz></inertia></inertial>
+      <visual name="rotor_2_visual"><geometry><mesh><scale>1 1 1</scale><uri>model://teleaquah8/meshes/ccw_prop.stl</uri></mesh></geometry><material><diffuse>0 0 1 1</diffuse></material></visual>
+    </link>
+    <plugin filename="gz-sim-multicopter-motor-model-system" name="gz::sim::systems::MulticopterMotorModel">
+      <jointName>rotor_2_joint</jointName>
+      <linkName>rotor_2</linkName>
+      <turningDirection>ccw</turningDirection>
+      <timeConstantUp>0.015</timeConstantUp><timeConstantDown>0.03</timeConstantDown>
+      <maxRotVelocity>1585</maxRotVelocity>
+      <motorConstant>1.64e-05</motorConstant>
+      <momentConstant>0.018</momentConstant>
+      <commandSubTopic>command/motor_speed</commandSubTopic>
+      <motorNumber>2</motorNumber>
+      <rotorDragCoefficient>0.0001</rotorDragCoefficient><rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+      <motorType>velocity</motorType>
+    </plugin>
+
+    <joint name="rotor_3_joint" type="revolute">
+      <parent>base_link</parent>
+      <child>rotor_3</child>
+      <pose relative_to="base_link">-0.166 -0.187 0.061 0 0 0</pose>
+      <axis><xyz>0 0 1</xyz></axis>
+    </joint>
+    <link name="rotor_3">
+      <pose relative_to="rotor_3_joint">0 0 0 0 0 0</pose>
+      <inertial><mass>0.113</mass><inertia><ixx>0.0001</ixx><iyy>0.0001</iyy><izz>0.0002</izz></inertia></inertial>
+      <visual name="rotor_3_visual"><geometry><mesh><scale>1 1 1</scale><uri>model://teleaquah8/meshes/cw_prop.stl</uri></mesh></geometry><material><diffuse>1 0 0 1</diffuse></material></visual>
+    </link>
+    <plugin filename="gz-sim-multicopter-motor-model-system" name="gz::sim::systems::MulticopterMotorModel">
+      <jointName>rotor_3_joint</jointName>
+      <linkName>rotor_3</linkName>
+      <turningDirection>cw</turningDirection>
+      <timeConstantUp>0.015</timeConstantUp><timeConstantDown>0.03</timeConstantDown>
+      <maxRotVelocity>1585</maxRotVelocity>
+      <motorConstant>1.64e-05</motorConstant>
+      <momentConstant>0.018</momentConstant>
+      <commandSubTopic>command/motor_speed</commandSubTopic>
+      <motorNumber>3</motorNumber>
+      <rotorDragCoefficient>0.0001</rotorDragCoefficient><rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+      <motorType>velocity</motorType>
+    </plugin>
+
+    <joint name="rotor_4_joint" type="revolute">
+      <parent>base_link</parent>
+      <child>rotor_4</child>
+      <pose relative_to="base_link">0.163 0.187 -0.052 0 0 0</pose>
+      <axis><xyz>0 0 1</xyz></axis>
+    </joint>
+    <link name="rotor_4">
+      <pose relative_to="rotor_4_joint">0 0 0 0 0 0</pose>
+      <inertial><mass>0.113</mass><inertia><ixx>0.0001</ixx><iyy>0.0001</iyy><izz>0.0002</izz></inertia></inertial>
+      <visual name="rotor_4_visual"><geometry><mesh><scale>1 1 1</scale><uri>model://teleaquah8/meshes/ccw_prop.stl</uri></mesh></geometry><material><diffuse>0 0 1 1</diffuse></material></visual>
+    </link>
+    <plugin filename="gz-sim-multicopter-motor-model-system" name="gz::sim::systems::MulticopterMotorModel">
+      <jointName>rotor_4_joint</jointName>
+      <linkName>rotor_4</linkName>
+      <turningDirection>ccw</turningDirection>
+      <timeConstantUp>0.015</timeConstantUp><timeConstantDown>0.03</timeConstantDown>
+      <maxRotVelocity>1585</maxRotVelocity>
+      <motorConstant>1.64e-05</motorConstant>
+      <momentConstant>0.018</momentConstant>
+      <commandSubTopic>command/motor_speed</commandSubTopic>
+      <motorNumber>4</motorNumber>
+      <rotorDragCoefficient>0.0001</rotorDragCoefficient><rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+      <motorType>velocity</motorType>
+    </plugin>
+
+    <joint name="rotor_5_joint" type="revolute">
+      <parent>base_link</parent>
+      <child>rotor_5</child>
+      <pose relative_to="base_link">0.163 -0.187 -0.052 0 0 0</pose>
+      <axis><xyz>0 0 1</xyz></axis>
+    </joint>
+    <link name="rotor_5">
+      <pose relative_to="rotor_5_joint">0 0 0 0 0 0</pose>
+      <inertial><mass>0.113</mass><inertia><ixx>0.0001</ixx><iyy>0.0001</iyy><izz>0.0002</izz></inertia></inertial>
+      <visual name="rotor_5_visual"><geometry><mesh><scale>1 1 1</scale><uri>model://teleaquah8/meshes/cw_prop.stl</uri></mesh></geometry><material><diffuse>1 0 0 1</diffuse></material></visual>
+    </link>
+    <plugin filename="gz-sim-multicopter-motor-model-system" name="gz::sim::systems::MulticopterMotorModel">
+      <jointName>rotor_5_joint</jointName>
+      <linkName>rotor_5</linkName>
+      <turningDirection>cw</turningDirection>
+      <timeConstantUp>0.015</timeConstantUp><timeConstantDown>0.03</timeConstantDown>
+      <maxRotVelocity>1585</maxRotVelocity>
+      <motorConstant>1.64e-05</motorConstant>
+      <momentConstant>0.018</momentConstant>
+      <commandSubTopic>command/motor_speed</commandSubTopic>
+      <motorNumber>5</motorNumber>
+      <rotorDragCoefficient>0.0001</rotorDragCoefficient><rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+      <motorType>velocity</motorType>
+    </plugin>
+
+    <joint name="rotor_6_joint" type="revolute">
+      <parent>base_link</parent>
+      <child>rotor_6</child>
+      <pose relative_to="base_link">-0.166 -0.187 -0.052 0 0 0</pose>
+      <axis><xyz>0 0 1</xyz></axis>
+    </joint>
+    <link name="rotor_6">
+      <pose relative_to="rotor_6_joint">0 0 0 0 0 0</pose>
+      <inertial><mass>0.113</mass><inertia><ixx>0.0001</ixx><iyy>0.0001</iyy><izz>0.0002</izz></inertia></inertial>
+      <visual name="rotor_6_visual"><geometry><mesh><scale>1 1 1</scale><uri>model://teleaquah8/meshes/ccw_prop.stl</uri></mesh></geometry><material><diffuse>0 0 1 1</diffuse></material></visual>
+    </link>
+    <plugin filename="gz-sim-multicopter-motor-model-system" name="gz::sim::systems::MulticopterMotorModel">
+      <jointName>rotor_6_joint</jointName>
+      <linkName>rotor_6</linkName>
+      <turningDirection>ccw</turningDirection>
+      <timeConstantUp>0.015</timeConstantUp><timeConstantDown>0.03</timeConstantDown>
+      <maxRotVelocity>1585</maxRotVelocity>
+      <motorConstant>1.64e-05</motorConstant>
+      <momentConstant>0.018</momentConstant>
+      <commandSubTopic>command/motor_speed</commandSubTopic>
+      <motorNumber>6</motorNumber>
+      <rotorDragCoefficient>0.0001</rotorDragCoefficient><rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+      <motorType>velocity</motorType>
+    </plugin>
+
+    <joint name="rotor_7_joint" type="revolute">
+      <parent>base_link</parent>
+      <child>rotor_7</child>
+      <pose relative_to="base_link">-0.166 0.187 -0.052 0 0 0</pose>
+      <axis><xyz>0 0 1</xyz></axis>
+    </joint>
+    <link name="rotor_7">
+      <pose relative_to="rotor_7_joint">0 0 0 0 0 0</pose>
+      <inertial><mass>0.113</mass><inertia><ixx>0.0001</ixx><iyy>0.0001</iyy><izz>0.0002</izz></inertia></inertial>
+      <visual name="rotor_7_visual"><geometry><mesh><scale>1 1 1</scale><uri>model://teleaquah8/meshes/cw_prop.stl</uri></mesh></geometry><material><diffuse>1 0 0 1</diffuse></material></visual>
+    </link>
+    <plugin filename="gz-sim-multicopter-motor-model-system" name="gz::sim::systems::MulticopterMotorModel">
+      <jointName>rotor_7_joint</jointName>
+      <linkName>rotor_7</linkName>
+      <turningDirection>cw</turningDirection>
+      <timeConstantUp>0.015</timeConstantUp><timeConstantDown>0.03</timeConstantDown>
+      <maxRotVelocity>1585</maxRotVelocity>
+      <motorConstant>1.64e-05</motorConstant>
+      <momentConstant>0.018</momentConstant>
+      <commandSubTopic>command/motor_speed</commandSubTopic>
+      <motorNumber>7</motorNumber>
+      <rotorDragCoefficient>0.0001</rotorDragCoefficient><rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
+      <motorType>velocity</motorType>
+    </plugin>
+
+    <joint name="rotor_8_joint" type="revolute">
+      <parent>base_link</parent>
+      <child>rotor_8</child>
+      <pose relative_to="base_link">-0.004 -0.093 0.003 0 0 0</pose>
+      <axis><xyz>-1 0 0</xyz></axis>
+    </joint>
+    <link name="rotor_8">
+      <pose relative_to="rotor_8_joint">0 0 0 0 0 0</pose>
+      <inertial><mass>0.1</mass><inertia><ixx>0.001</ixx><iyy>0.001</iyy><izz>0.001</izz></inertia></inertial>
+      <visual name="rotor_8_visual"><geometry><mesh><scale>1 1 1</scale><uri>model://teleaquah8/meshes/right_waterprop.stl</uri></mesh></geometry><material><diffuse>0 1 0 1</diffuse></material></visual>
+    </link>
+    <plugin filename="gz-sim-bidir-motor-model-system" name="gz::sim::v8::systems::BiDirectionalMotorModel">
+      <jointName>rotor_8_joint</jointName>
+      <linkName>rotor_8</linkName>
+      <turningDirection>ccw</turningDirection>
+      <timeConstantUp>0.0125</timeConstantUp>
+      <timeConstantDown>0.025</timeConstantDown>
+      <motorConstant>9.6065e-07</motorConstant>
+      <momentConstant>-3.318e-10</momentConstant>
+      <commandSubTopic>servo_0</commandSubTopic>
+      <motorNumber>0</motorNumber>
+      <thrustAxis>-1 0 0</thrustAxis>
+      <commandGain>57.29</commandGain>
+      <deadbandOmega>10</deadbandOmega>
+      <maxOmega>3500</maxOmega>
+      <maxThrust>15</maxThrust>
+      <maxTorque>1.5</maxTorque>
+      <forwardCoeff>1.0</forwardCoeff>
+      <reverseCoeff>0.86</reverseCoeff>
+    </plugin>
+
+    <joint name="rotor_9_joint" type="revolute">
+      <parent>base_link</parent>
+      <child>rotor_9</child>
+      <pose relative_to="base_link">0.159 0 0.017 0 0 0</pose>
+      <axis><xyz>0 0 -1</xyz></axis>
+    </joint>
+    <link name="rotor_9">
+      <pose relative_to="rotor_9_joint">0 0 0 0 0 0</pose>
+      <inertial><mass>0.1</mass><inertia><ixx>0.001</ixx><iyy>0.001</iyy><izz>0.001</izz></inertia></inertial>
+      <visual name="rotor_9_visual"><geometry><mesh><scale>1 1 1</scale><uri>model://teleaquah8/meshes/front_waterprop.stl</uri></mesh></geometry><material><diffuse>0 1 0 1</diffuse></material></visual>
+    </link>
+    <plugin filename="gz-sim-bidir-motor-model-system" name="gz::sim::v8::systems::BiDirectionalMotorModel">
+      <jointName>rotor_9_joint</jointName>
+      <linkName>rotor_9</linkName>
+      <turningDirection>ccw</turningDirection>
+      <timeConstantUp>0.0125</timeConstantUp>
+      <timeConstantDown>0.025</timeConstantDown>
+      <motorConstant>9.6065e-07</motorConstant>
+      <momentConstant>-3.318e-10</momentConstant>
+      <commandSubTopic>servo_1</commandSubTopic>
+      <motorNumber>0</motorNumber>
+      <thrustAxis>0 0 -1</thrustAxis>
+      <commandGain>57.29</commandGain>
+      <deadbandOmega>10</deadbandOmega>
+      <maxOmega>3500</maxOmega>
+      <maxThrust>15</maxThrust>
+      <maxTorque>1.5</maxTorque>
+      <forwardCoeff>1.0</forwardCoeff>
+      <reverseCoeff>0.86</reverseCoeff>
+    </plugin>
+
+    <joint name="rotor_10_joint" type="revolute">
+      <parent>base_link</parent>
+      <child>rotor_10</child>
+      <pose relative_to="base_link">-0.004 0.093 0.003 0 0 0</pose>
+      <axis><xyz>1 0 0</xyz></axis>
+    </joint>
+    <link name="rotor_10">
+      <pose relative_to="rotor_10_joint">0 0 0 0 0 0</pose>
+      <inertial><mass>0.1</mass><inertia><ixx>0.001</ixx><iyy>0.001</iyy><izz>0.001</izz></inertia></inertial>
+      <visual name="rotor_10_visual"><geometry><mesh><scale>1 1 1</scale><uri>model://teleaquah8/meshes/left_waterprop.stl</uri></mesh></geometry><material><diffuse>0 1 0 1</diffuse></material></visual>
+    </link>
+    <plugin filename="gz-sim-bidir-motor-model-system" name="gz::sim::v8::systems::BiDirectionalMotorModel">
+      <jointName>rotor_10_joint</jointName>
+      <linkName>rotor_10</linkName>
+      <turningDirection>ccw</turningDirection>
+      <timeConstantUp>0.0125</timeConstantUp>
+      <timeConstantDown>0.025</timeConstantDown>
+      <motorConstant>9.6065e-07</motorConstant>
+      <momentConstant>-3.318e-10</momentConstant>
+      <commandSubTopic>servo_2</commandSubTopic>
+      <motorNumber>0</motorNumber>
+      <thrustAxis>1 0 0</thrustAxis>
+      <commandGain>57.29</commandGain>
+      <deadbandOmega>10</deadbandOmega>
+      <maxOmega>3500</maxOmega>
+      <maxThrust>15</maxThrust>
+      <maxTorque>1.5</maxTorque>
+      <forwardCoeff>1.0</forwardCoeff>
+      <reverseCoeff>0.86</reverseCoeff>
+    </plugin>
+
+    <joint name="rotor_11_joint" type="revolute">
+      <parent>base_link</parent>
+      <child>rotor_11</child>
+      <pose relative_to="base_link">-0.161 0. 0.017 0 0 0</pose>
+      <axis><xyz>0 0 -1</xyz></axis>
+    </joint>
+    <link name="rotor_11">
+      <pose relative_to="rotor_11_joint">0 0 0 0 0 0</pose>
+      <inertial><mass>0.1</mass><inertia><ixx>0.001</ixx><iyy>0.001</iyy><izz>0.001</izz></inertia></inertial>
+      <visual name="rotor_11_visual"><geometry><mesh><scale>1 1 1</scale><uri>model://teleaquah8/meshes/back_waterprop.stl</uri></mesh></geometry><material><diffuse>0 1 0 1</diffuse></material></visual>
+    </link>
+    <plugin filename="gz-sim-bidir-motor-model-system" name="gz::sim::v8::systems::BiDirectionalMotorModel">
+      <jointName>rotor_11_joint</jointName>
+      <linkName>rotor_11</linkName>
+      <turningDirection>ccw</turningDirection>
+      <timeConstantUp>0.0125</timeConstantUp>
+      <timeConstantDown>0.025</timeConstantDown>
+      <motorConstant>9.6065e-07</motorConstant>
+      <momentConstant>-3.318e-10</momentConstant>
+      <commandSubTopic>servo_3</commandSubTopic>
+      <motorNumber>0</motorNumber>
+      <thrustAxis>0 0 -1</thrustAxis>
+      <commandGain>57.29</commandGain>
+      <deadbandOmega>10</deadbandOmega>
+      <maxOmega>3500</maxOmega>
+      <maxThrust>15</maxThrust>
+      <maxTorque>1.5</maxTorque>
+      <forwardCoeff>1.0</forwardCoeff>
+      <reverseCoeff>0.86</reverseCoeff>
+    </plugin>
+    <plugin filename="libbuoyancy" name="hippo_gz_plugins::buoyancy">
+      <buoyancy>
+        <!-- 必须配置：应用浮力的链接名称（与模型中定义的链接名一致） -->
+        <link_name>base_link</link_name>
+
+        <!-- 必须配置：额外叠加的恒定浮力（单位：N） -->
+        <force_added>0.0</force_added>
+
+        <!-- 必须配置：浮力对重力的补偿比例（1.0 表示完全抵消重力） -->
+        <compensation>1.33</compensation>
+
+        <!-- 必须配置：浮力作用点（相对于链接局部坐标系的原点） -->
+        <origin>0 0.0 0.02</origin>
+
+        <!-- 必须配置：水面附近浮力衰减的距离阈值（Z坐标高于此值时浮力线性衰减至0） -->
+        <height_scale_limit>0.1</height_scale_limit>
+      </buoyancy>
+    </plugin>
+    <plugin filename="libhydrodynamics" name="hippo_gz_plugins::hydrodynamics">
+      <hydrodynamics>
+        <link>base_link</link>
+
+        <added_mass_linear>3.0 4.5 5.5</added_mass_linear>
+        <added_mass_angular>0.1 0.1 0.2</added_mass_angular>
+
+        <damping_linear>12.0 25.0 25.0</damping_linear>
+
+        <damping_angular>5.0 5.0 8.0</damping_angular>
+      </hydrodynamics>
+    </plugin>
+    <plugin filename="gz-sim-pose-publisher-system" name="gz::sim::systems::PosePublisher">
+      <publish_link_pose>false</publish_link_pose>
+      <publish_nested_model_pose>true</publish_nested_model_pose>
+      <publish_model_pose>true</publish_model_pose>  <!-- 显式启用模型位姿发布 -->
+      <publish_pose_topic>/model/mcuuv_0/pose</publish_pose_topic>
+    </plugin>
+  </model>
+</sdf>
