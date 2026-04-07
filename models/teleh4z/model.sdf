@@ -964,15 +964,7 @@
       <maxTorque>1.5</maxTorque>
       <forwardCoeff>1.0</forwardCoeff>
       <reverseCoeff>0.86</reverseCoeff>
-      <surface_z>0.0</surface_z>
-      <transition_band>0.08</transition_band>
-      <fluid_density_water>1000.0</fluid_density_water>
-      <fluid_density_air>1.225</fluid_density_air>
-      <sample_point>0 0 0</sample_point>
-      <sample_point>0 0.018 0</sample_point>
-      <sample_point>0 -0.018 0</sample_point>
-      <sample_point>0 0 0.018</sample_point>
-      <sample_point>0 0 -0.018</sample_point>
+
     </plugin>
 
     <plugin filename="gz-sim-bidir-motor-model-system" name="gz::sim::v8::systems::BiDirectionalMotorModel">
@@ -997,11 +989,6 @@
       <transition_band>0.08</transition_band>
       <fluid_density_water>1000.0</fluid_density_water>
       <fluid_density_air>1.225</fluid_density_air>
-      <sample_point>0 0 0</sample_point>
-      <sample_point>0 0.018 0</sample_point>
-      <sample_point>0 -0.018 0</sample_point>
-      <sample_point>0 0 0.018</sample_point>
-      <sample_point>0 0 -0.018</sample_point>
     </plugin>
 
     <plugin filename="/home/user/external/plugins/hydrodynamics/build/libhydrodynamics.so" name="zyshine3_gz_plugins::HybridHydrodynamics">
@@ -1034,16 +1021,16 @@
         <air_prop_link_name>airprop_leftback_link</air_prop_link_name>
         <air_prop_link_name>airprop_rightback_link</air_prop_link_name>
 
-        <!-- HybridHydrodynamics v2 新增：插件侧附加质量与附加质量科氏项。
+        <!-- HybridHydrodynamics v2 ：插件侧附加质量与附加质量科氏项。
              这里沿用传统水动力学导数符号约定，内部会按正幅值使用。 -->
         <enable_added_mass>true</enable_added_mass>
         <enable_added_mass_coriolis>true</enable_added_mass_coriolis>
-        <xDotU>-2.4</xDotU>
-        <yDotV>-5.2</yDotV>
-        <zDotW>-2.1</zDotW>
+        <xDotU>-0.01</xDotU>
+        <yDotV>-0.02</yDotV>
+        <zDotW>-0.01</zDotW>
         <kDotP>-0.08</kDotP>
-        <mDotQ>-0.24</mDotQ>
-        <nDotR>-0.32</nDotR>
+        <mDotQ>-0.04</mDotQ>
+        <nDotR>-0.02</nDotR>
 
         <!-- HybridHydrodynamics v2 新增：加速度估计滤波、限幅与 jerk 限制。
              这些是首版稳定性占位参数，后续可以结合日志继续调参。 -->
@@ -1056,15 +1043,15 @@
         <added_mass_reset_scale_threshold>0.05</added_mass_reset_scale_threshold>
 
         <!-- HybridHydrodynamics v2 阻尼参数：仍保留线性项与 abs 二次项。 -->
-        <xU>-8.0</xU>
+        <xU>-12.0</xU>
         <xUabsU>-15.0</xUabsU>
-        <yV>-18.0</yV>
+        <yV>-25.0</yV>
         <yVabsV>-65.0</yVabsV>
-        <zW>-12.0</zW>
+        <zW>-25.0</zW>
         <zWabsW>-42.0</zWabsW>
-        <kP>-1.2</kP>
+        <kP>-5.2</kP>
         <kPabsP>-1.5</kPabsP>
-        <mQ>-4.0</mQ>
+        <mQ>-5.0</mQ>
         <mQabsQ>-9.0</mQabsQ>
         <nR>-4.5</nR>
         <nRabsR>-10.5</nRabsR>
