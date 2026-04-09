@@ -100,7 +100,7 @@ param set-default CA_ROTOR4_PZ 0.007866
 param set-default CA_ROTOR4_AX 1.0
 param set-default CA_ROTOR4_AY 0.0
 param set-default CA_ROTOR4_AZ 0.0
-param set-default CA_ROTOR4_CT 26.0
+param set-default CA_ROTOR4_CT 8.5
 param set-default CA_ROTOR4_KM 0.0
 
 # Rotor index 5 / servo_1 (Front): SDF[0.1139, 0, 0.04] -> PX4[0.1139, 0, -0.0400]
@@ -110,7 +110,7 @@ param set-default CA_ROTOR5_PZ -0.0400
 param set-default CA_ROTOR5_AX 0.0
 param set-default CA_ROTOR5_AY 0.0
 param set-default CA_ROTOR5_AZ 1.0
-param set-default CA_ROTOR5_CT 26.0
+param set-default CA_ROTOR5_CT 8.5
 param set-default CA_ROTOR5_KM 0.0
 
 # Rotor index 6 / servo_2 (Left): SDF[-0.155, 0.036, -0.007866] -> PX4[-0.155, -0.036, 0.007866]
@@ -120,7 +120,7 @@ param set-default CA_ROTOR6_PZ 0.007866
 param set-default CA_ROTOR6_AX 1.0
 param set-default CA_ROTOR6_AY 0.0
 param set-default CA_ROTOR6_AZ 0.0
-param set-default CA_ROTOR6_CT 26.0
+param set-default CA_ROTOR6_CT 8.5
 param set-default CA_ROTOR6_KM 0.0
 
 # Rotor index 7 / servo_3 (Back): SDF[-0.10643, 0, 0.04] -> PX4[-0.10643, 0, -0.0400]
@@ -130,7 +130,7 @@ param set-default CA_ROTOR7_PZ -0.0400
 param set-default CA_ROTOR7_AX 0.0
 param set-default CA_ROTOR7_AY 0.0
 param set-default CA_ROTOR7_AZ 1.0
-param set-default CA_ROTOR7_CT 26.0
+param set-default CA_ROTOR7_CT 8.5
 param set-default CA_ROTOR7_KM 0.0
 # =========================================================
 # 3. 飞行控制参数 (PID & MPC) - 基于仿真调试和实机经验的初始值，后续可根据飞行表现微调
@@ -209,17 +209,17 @@ param set-default SIM_GZ_SV_FUNC1 105
 param set-default SIM_GZ_SV_FUNC2 106
 param set-default SIM_GZ_SV_FUNC3 107
 param set-default SIM_GZ_SV_FUNC4 108
-param set-default SIM_GZ_SV_MINA1 -3500
-param set-default SIM_GZ_SV_MAXA1 3500
+param set-default SIM_GZ_SV_MINA1 1000
+param set-default SIM_GZ_SV_MAXA1 2000
 param set-default SIM_GZ_SV_DIS1 500
-param set-default SIM_GZ_SV_MINA2 -3500
-param set-default SIM_GZ_SV_MAXA2 3500
+param set-default SIM_GZ_SV_MINA2 1000
+param set-default SIM_GZ_SV_MAXA2 2000
 param set-default SIM_GZ_SV_DIS2 500
-param set-default SIM_GZ_SV_MINA3 -3500
-param set-default SIM_GZ_SV_MAXA3 3500
+param set-default SIM_GZ_SV_MINA3 1000
+param set-default SIM_GZ_SV_MAXA3 2000
 param set-default SIM_GZ_SV_DIS3 500
-param set-default SIM_GZ_SV_MINA4 -3500
-param set-default SIM_GZ_SV_MAXA4 3500
+param set-default SIM_GZ_SV_MINA4 1000
+param set-default SIM_GZ_SV_MAXA4 2000
 param set-default SIM_GZ_SV_DIS4 500
 
 # =========================================================
