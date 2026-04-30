@@ -14,15 +14,15 @@
       <pose>0 0 0 0 0 0</pose>
 
       <inertial>
-        <mass>2.25</mass>
-        <pose>0 0 -0.015 0 0 0</pose>
+        <mass>1.45</mass>
+        <pose>0 0 -0.0008 0 0 0</pose>
         <inertia>
-          <ixx>0.00166875</ixx>
-          <ixy>0</ixy>
-          <ixz>0</ixz>
-          <iyy>0.01734375</iyy>
-          <iyz>0</iyz>
-          <izz>0.018075</izz>
+          <ixx>0.003964</ixx>
+          <ixy>-0.000003</ixy>
+          <ixz>0.000266</ixz>
+          <iyy>0.011147</iyy>
+          <iyz>-0.000005</iyz>
+          <izz>0.011083</izz>
         </inertia>
         <!-- HybridHydrodynamics v2 当前由插件侧附加质量主导。
              下面这段 <fluid_added_mass> 必须保持注释，否则会与插件内
@@ -47,10 +47,10 @@
       </visual>
 
       <collision name="base_buoyancy_collision">
-        <pose>0 0 -0.03 0 0 0</pose>
+        <pose>0 0 -0.0497833333 0 0 0</pose>
         <geometry>
           <box>
-            <size>0.30 0.08 0.05</size>
+            <size>0.375 0.080 0.0304333333</size>
           </box>
         </geometry>
         <surface>
@@ -118,13 +118,14 @@
     <link name="buoyancy_shell_link">
       <pose relative_to="base_link">0 0 0 0 0 0</pose>
       <inertial>
-        <mass>0.5</mass>
+        <mass>0.25</mass>
+        <pose>0 -0.000018 -0.0003683 0 0 0</pose>
         <inertia>
-          <ixx>0.0011360133</ixx>
-          <iyy>0.0020696800</iyy>
-          <izz>0.0027333333</izz>
+          <ixx>0.000789</ixx>
+          <iyy>0.003277</iyy>
+          <izz>0.003674</izz>
           <ixy>0</ixy>
-          <ixz>0</ixz>
+          <ixz>0.000051</ixz>
           <iyz>0</iyz>
         </inertia>
       </inertial>
@@ -139,10 +140,10 @@
       </visual>
 
       <collision name="shell_buoyancy_collision">
-        <pose>0 0 0.05 0 0 0</pose>
+        <pose>0 0 0.0547127329 0 0 0</pose>
         <geometry>
           <box>
-            <size>0.24 0.16 0.0408854167</size>
+            <size>0.240 0.161 0.0205745342</size>
           </box>
         </geometry>
       </collision>
