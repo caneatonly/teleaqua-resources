@@ -69,7 +69,7 @@ plugins/
 - `hydrodynamics`：混合流体动力学插件，用于水动力、附加质量和空气/水过渡效果
 - `buoyancy`：浮力相关插件
 
-编译插件通常在容器内执行：
+编译插件可在容器内执行以下脚本或阅读插件仓库Readme文档：
 
 ```bash
 cd /home/user/external/plugins
