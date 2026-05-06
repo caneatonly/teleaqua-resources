@@ -42,9 +42,10 @@
         </geometry>
       </visual>
 
-      <collision name="base_collision">
+      <collision name="base_buoyancy_collision">
+        <pose>0 0 -0.03 0 0 0</pose>
         <geometry>
-          <box><size>0.55 0.55 0.2</size></box>
+          <box><size>0.26 0.18 0.05</size></box>
         </geometry>
         <surface>
           <contact>
@@ -104,6 +105,35 @@
         <update_rate>30</update_rate>
       </sensor>
     </link>
+
+    <link name="buoyancy_shell_link">
+      <pose relative_to="base_link">0 0 0 0 0 0</pose>
+      <inertial>
+        <mass>1e-6</mass>
+        <inertia>
+          <ixx>1e-9</ixx>
+          <iyy>1e-9</iyy>
+          <izz>1e-9</izz>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyz>0</iyz>
+        </inertia>
+      </inertial>
+
+      <collision name="shell_buoyancy_collision">
+        <pose>0 0 0.05 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.24 0.24 0.0546</size>
+          </box>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="buoyancy_shell_joint" type="fixed">
+      <parent>base_link</parent>
+      <child>buoyancy_shell_link</child>
+    </joint>
 
     <joint name="rotor_0_joint" type="revolute">
       <parent>base_link</parent>
@@ -428,34 +458,68 @@
       <forwardCoeff>1.0</forwardCoeff>
       <reverseCoeff>0.86</reverseCoeff>
     </plugin>
-    <plugin filename="libbuoyancy" name="hippo_gz_plugins::buoyancy">
-      <buoyancy>
-        <!-- 必须配置：应用浮力的链接名称（与模型中定义的链接名一致） -->
-        <link_name>base_link</link_name>
-
-        <!-- 必须配置：额外叠加的恒定浮力（单位：N） -->
-        <force_added>0.0</force_added>
-
-        <!-- 必须配置：浮力对重力的补偿比例（1.0 表示完全抵消重力） -->
-        <compensation>1.33</compensation>
-
-        <!-- 必须配置：浮力作用点（相对于链接局部坐标系的原点） -->
-        <origin>0 0.0 0.02</origin>
-
-        <!-- 必须配置：水面附近浮力衰减的距离阈值（Z坐标高于此值时浮力线性衰减至0） -->
-        <height_scale_limit>0.1</height_scale_limit>
-      </buoyancy>
-    </plugin>
-    <plugin filename="libhydrodynamics" name="hippo_gz_plugins::hydrodynamics">
+    <plugin filename="/home/user/external/plugins/hydrodynamics/build/libhydrodynamics.so" name="zyshine3_gz_plugins::HybridHydrodynamics">
       <hydrodynamics>
-        <link>base_link</link>
+        <link_name>base_link</link_name>
+        <surface_z>0.0</surface_z>
+        <transition_band>0.1</transition_band>
+        <fluid_density_water>1000.0</fluid_density_water>
+        <fluid_density_air>1.225</fluid_density_air>
+        <default_current>0 0 0</default_current>
+        <air_clearance_margin>-0.02</air_clearance_margin>
+        <sample_point>0.22 0.0 0.08</sample_point>
+        <sample_point>0.22 0.0 -0.05</sample_point>
+        <sample_point>0.10 0.18 0.06</sample_point>
+        <sample_point>0.10 -0.18 0.06</sample_point>
+        <sample_point>0.00 0.0 0.10</sample_point>
+        <sample_point>0.00 0.0 -0.06</sample_point>
+        <sample_point>-0.18 0.18 0.04</sample_point>
+        <sample_point>-0.18 -0.18 0.04</sample_point>
+        <sample_point>-0.22 0.0 -0.02</sample_point>
 
-        <added_mass_linear>3.0 4.5 5.5</added_mass_linear>
-        <added_mass_angular>0.1 0.1 0.2</added_mass_angular>
+        <water_thruster_link_name>rotor_8</water_thruster_link_name>
+        <water_thruster_link_name>rotor_9</water_thruster_link_name>
+        <water_thruster_link_name>rotor_10</water_thruster_link_name>
+        <water_thruster_link_name>rotor_11</water_thruster_link_name>
 
-        <damping_linear>12.0 25.0 25.0</damping_linear>
+        <air_prop_link_name>rotor_0</air_prop_link_name>
+        <air_prop_link_name>rotor_1</air_prop_link_name>
+        <air_prop_link_name>rotor_2</air_prop_link_name>
+        <air_prop_link_name>rotor_3</air_prop_link_name>
+        <air_prop_link_name>rotor_4</air_prop_link_name>
+        <air_prop_link_name>rotor_5</air_prop_link_name>
+        <air_prop_link_name>rotor_6</air_prop_link_name>
+        <air_prop_link_name>rotor_7</air_prop_link_name>
 
-        <damping_angular>5.0 5.0 8.0</damping_angular>
+        <enable_added_mass>true</enable_added_mass>
+        <enable_added_mass_coriolis>true</enable_added_mass_coriolis>
+        <xDotU>-0.6</xDotU>
+        <yDotV>-1.0</yDotV>
+        <zDotW>-0.6</zDotW>
+        <kDotP>-0.1</kDotP>
+        <mDotQ>-0.05</mDotQ>
+        <nDotR>-0.04</nDotR>
+
+        <added_mass_velocity_filter_tau>0.03</added_mass_velocity_filter_tau>
+        <added_mass_accel_filter_tau>0.06</added_mass_accel_filter_tau>
+        <added_mass_linear_accel_limit>4.0</added_mass_linear_accel_limit>
+        <added_mass_angular_accel_limit>8.0</added_mass_angular_accel_limit>
+        <added_mass_linear_jerk_limit>20.0</added_mass_linear_jerk_limit>
+        <added_mass_angular_jerk_limit>40.0</added_mass_angular_jerk_limit>
+        <added_mass_reset_scale_threshold>0.05</added_mass_reset_scale_threshold>
+
+        <xU>-12.0</xU>
+        <xUabsU>-15.0</xUabsU>
+        <yV>-25.0</yV>
+        <yVabsV>-65.0</yVabsV>
+        <zW>-25.0</zW>
+        <zWabsW>-42.0</zWabsW>
+        <kP>-5.2</kP>
+        <kPabsP>-1.5</kPabsP>
+        <mQ>-5.0</mQ>
+        <mQabsQ>-9.0</mQabsQ>
+        <nR>-4.5</nR>
+        <nRabsR>-10.5</nRabsR>
       </hydrodynamics>
     </plugin>
     <plugin filename="gz-sim-pose-publisher-system" name="gz::sim::systems::PosePublisher">
