@@ -72,8 +72,13 @@
           <density>1.225</density>
         </density_change>
       </graded_buoyancy>
+      <enable>teleaquah8_0</enable>
+      <enable>teleaquah8</enable>
+      <enable>teleaquah8</enable>
       <enable>teleh4z_0</enable>
       <enable>teleh4z</enable>
+      <enable>teleaquah8p_mono_cam</enable>
+      <enable>teleaquah8p_mono_cam_0</enable>
 
     </plugin>
 
