@@ -4,7 +4,7 @@
 
 echo "编译Gazebo插件..."
 
-for plugin in bidir_motor_model buoyancy hydrodynamics; do
+for plugin in bidir_motor_model hydrodynamics; do
     echo "处理: $plugin"
     
     cd "$plugin" || continue
