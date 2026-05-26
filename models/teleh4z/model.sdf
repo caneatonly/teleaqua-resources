@@ -889,18 +889,19 @@
       <motorType>velocity</motorType>
     </plugin>
 
-    <plugin filename="gz-sim-bidir-motor-model-system" name="gz::sim::v8::systems::BiDirectionalMotorModel">
+    <plugin filename="/home/user/external/plugins/bidir_motor_model/build/libgz-sim-bidir-motor-model-system.so" name="gz::sim::v8::systems::BiDirectionalMotorModel">
       <jointName>waterprop_right_joint</jointName>
       <linkName>waterprop_right_link</linkName>
       <turningDirection>ccw</turningDirection>
-      <timeConstantUp>0.0125</timeConstantUp>
-      <timeConstantDown>0.025</timeConstantDown>
+      <timeConstantUp>1e-6</timeConstantUp>
+      <timeConstantDown>1e-6</timeConstantDown>
       <motorConstant>9.6065e-07</motorConstant>
       <momentConstant>-3.318e-10</momentConstant>
       <commandSubTopic>servo_0</commandSubTopic>
       <motorNumber>0</motorNumber>
       <thrustAxis>1 0 0</thrustAxis>
-      <commandGain>57.29</commandGain>
+      <commandGain>1.0</commandGain>
+      <SIM_GZ_SV_TRIM>0.0</SIM_GZ_SV_TRIM>
       <deadbandOmega>10</deadbandOmega>
       <maxOmega>3500</maxOmega>
       <maxThrust>15</maxThrust>
@@ -918,18 +919,19 @@
       <sample_point>0 0 -0.018</sample_point>
     </plugin>
 
-    <plugin filename="gz-sim-bidir-motor-model-system" name="gz::sim::v8::systems::BiDirectionalMotorModel">
+    <plugin filename="/home/user/external/plugins/bidir_motor_model/build/libgz-sim-bidir-motor-model-system.so" name="gz::sim::v8::systems::BiDirectionalMotorModel">
       <jointName>waterprop_front_joint</jointName>
       <linkName>waterprop_front_link</linkName>
       <turningDirection>ccw</turningDirection>
-      <timeConstantUp>0.0125</timeConstantUp>
-      <timeConstantDown>0.025</timeConstantDown>
+      <timeConstantUp>1e-6</timeConstantUp>
+      <timeConstantDown>1e-6</timeConstantDown>
       <motorConstant>9.6065e-07</motorConstant>
       <momentConstant>-3.318e-10</momentConstant>
       <commandSubTopic>servo_1</commandSubTopic>
       <motorNumber>0</motorNumber>
       <thrustAxis>1 0 0</thrustAxis>
-      <commandGain>57.29</commandGain>
+      <commandGain>1.0</commandGain>
+      <SIM_GZ_SV_TRIM>0.0</SIM_GZ_SV_TRIM>
       <deadbandOmega>10</deadbandOmega>
       <maxOmega>3500</maxOmega>
       <maxThrust>15</maxThrust> 
@@ -947,18 +949,19 @@
       <sample_point>0 0 -0.018</sample_point>
     </plugin>
 
-    <plugin filename="gz-sim-bidir-motor-model-system" name="gz::sim::v8::systems::BiDirectionalMotorModel">
+    <plugin filename="/home/user/external/plugins/bidir_motor_model/build/libgz-sim-bidir-motor-model-system.so" name="gz::sim::v8::systems::BiDirectionalMotorModel">
       <jointName>waterprop_left_joint</jointName>
       <linkName>waterprop_left_link</linkName>
       <turningDirection>ccw</turningDirection>
-      <timeConstantUp>0.0125</timeConstantUp>
-      <timeConstantDown>0.025</timeConstantDown>
+      <timeConstantUp>1e-6</timeConstantUp>
+      <timeConstantDown>1e-6</timeConstantDown>
       <motorConstant>9.6065e-07</motorConstant>
       <momentConstant>-3.318e-10</momentConstant>
       <commandSubTopic>servo_2</commandSubTopic>
       <motorNumber>0</motorNumber>
       <thrustAxis>1 0 0</thrustAxis>
-      <commandGain>57.29</commandGain>
+      <commandGain>1.0</commandGain>
+      <SIM_GZ_SV_TRIM>0.0</SIM_GZ_SV_TRIM>
       <deadbandOmega>10</deadbandOmega>
       <maxOmega>3500</maxOmega>
       <maxThrust>15</maxThrust>
@@ -968,18 +971,19 @@
 
     </plugin>
 
-    <plugin filename="gz-sim-bidir-motor-model-system" name="gz::sim::v8::systems::BiDirectionalMotorModel">
+    <plugin filename="/home/user/external/plugins/bidir_motor_model/build/libgz-sim-bidir-motor-model-system.so" name="gz::sim::v8::systems::BiDirectionalMotorModel">
       <jointName>waterprop_back_joint</jointName>
       <linkName>waterprop_back_link</linkName>
       <turningDirection>ccw</turningDirection>
-      <timeConstantUp>0.0125</timeConstantUp>
-      <timeConstantDown>0.025</timeConstantDown>
+      <timeConstantUp>1e-6</timeConstantUp>
+      <timeConstantDown>1e-6</timeConstantDown>
       <motorConstant>9.6065e-07</motorConstant>
       <momentConstant>-3.318e-10</momentConstant>
       <commandSubTopic>servo_3</commandSubTopic>
       <motorNumber>0</motorNumber>
       <thrustAxis>1 0 0</thrustAxis>
-      <commandGain>57.29</commandGain>
+      <commandGain>1.0</commandGain>
+      <SIM_GZ_SV_TRIM>0.0</SIM_GZ_SV_TRIM>
       <deadbandOmega>10</deadbandOmega>
       <maxOmega>3500</maxOmega>
       <maxThrust>15</maxThrust>
@@ -999,6 +1003,7 @@
         <transition_band>0.1</transition_band>
         <fluid_density_water>1000.0</fluid_density_water>
         <fluid_density_air>1.225</fluid_density_air>
+        <force_mediumScale>1.0</force_mediumScale>
         <default_current>0 0 0</default_current>
         <air_clearance_margin>-0.02</air_clearance_margin>
         <!-- 浸沒比例采样点可以进一步优化 -->
@@ -1026,7 +1031,7 @@
              这里沿用传统水动力学导数符号约定，内部会按正幅值使用。 -->
         <enable_added_mass>true</enable_added_mass>
         <enable_added_mass_coriolis>true</enable_added_mass_coriolis>
-        <xDotU>-0.01</xDotU>
+        <xDotU>-3.760149</xDotU>
         <yDotV>-0.02</yDotV>
         <zDotW>-0.01</zDotW>
         <kDotP>-0.08</kDotP>
@@ -1044,8 +1049,8 @@
         <added_mass_reset_scale_threshold>0.05</added_mass_reset_scale_threshold>
 
         <!-- HybridHydrodynamics v2 阻尼参数：仍保留线性项与 abs 二次项。 -->
-        <xU>-12.0</xU>
-        <xUabsU>-15.0</xUabsU>
+        <xU>-0.0500326933636399</xU>
+        <xUabsU>-7.50567953394116</xUabsU>
         <yV>-25.0</yV>
         <yVabsV>-65.0</yVabsV>
         <zW>-25.0</zW>
@@ -1063,6 +1068,10 @@
       <publish_link_pose>false</publish_link_pose>
       <publish_nested_model_pose>true</publish_nested_model_pose> 
       <publish_model_pose>true</publish_model_pose>
+    </plugin>
+
+    <plugin filename="gz-sim-odometry-publisher-system" name="gz::sim::systems::OdometryPublisher">
+      <dimensions>3</dimensions>
     </plugin>
 
   </model>
